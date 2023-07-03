@@ -184,7 +184,7 @@
         -   name: show_flags
             type: bool
             default_value: true
-            public: false
+            public: true
             description: Show country information in the interfaces?
         -   name: show_affiliations
             type: bool
