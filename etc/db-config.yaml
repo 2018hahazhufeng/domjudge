@@ -184,7 +184,7 @@
         -   name: show_flags
             type: bool
             default_value: true
-            public: true
+            public: false
             description: Show country information in the interfaces?
         -   name: show_affiliations
             type: bool
@@ -215,6 +215,11 @@
             default_value: false
             public: true
             description: Should teams be able to view a diff of their and the reference output on sample testcases?
+        -   name: show_too-late_result
+            type: bool
+            default_value: false
+            public: true
+            description: Show specific results of TOO-LATE submissions in team interface?
         -   name: show_balloons_postfreeze
             type: bool
             default_value: false

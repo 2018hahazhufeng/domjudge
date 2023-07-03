@@ -114,6 +114,7 @@ class SubmissionController extends BaseController
         $showCompile      = $this->config->get('show_compile');
         $showSampleOutput = $this->config->get('show_sample_output');
         $allowDownload    = (bool)$this->config->get('allow_team_submission_download');
+        $showToolateResult= $this->config->get('show_too-late_result');
         $user             = $this->dj->getUser();
         $team             = $user->getTeam();
         $contest          = $this->dj->getCurrentContest($team->getTeamid());
@@ -192,6 +193,7 @@ class SubmissionController extends BaseController
             'allowDownload' => $allowDownload,
             'showSampleOutput' => $showSampleOutput,
             'runs' => $runs,
+            'showToolateResult' => $showToolateResult,
         ];
         if ($actuallyShowCompile) {
             $data['size'] = 'xl';
