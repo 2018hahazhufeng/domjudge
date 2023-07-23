@@ -145,30 +145,31 @@ AC_CHECK_LIB(cgroup, cgroup_init, AC_SUBST(LIBCGROUP,[-lcgroup]), AC_MSG_ERROR([
 
 # These are defaults that can still be overridden below!
 if test "x$FHS_ENABLED" = xyes ; then
-	AC_SUBST(domserver_root,        '')
-	AC_SUBST(domserver_bindir,      $bindir)
-	AC_SUBST(domserver_etcdir,      $sysconfdir/${PACKAGE_TARNAME})
-	AC_SUBST(domserver_webappdir,   $datadir/${PACKAGE_TARNAME}/webapp)
-	AC_SUBST(domserver_sqldir,      $datadir/${PACKAGE_TARNAME}/sql)
-	AC_SUBST(domserver_libdir,      $libdir/${PACKAGE_TARNAME})
-	AC_SUBST(domserver_libvendordir,$libdir/${PACKAGE_TARNAME}/vendor)
-	AC_SUBST(domserver_logdir,      $localstatedir/log/${PACKAGE_TARNAME})
-	AC_SUBST(domserver_rundir,      $localstatedir/run/${PACKAGE_TARNAME})
-	AC_SUBST(domserver_tmpdir,      /tmp)
+	AC_SUBST(domserver_root,          '')
+	AC_SUBST(domserver_bindir,        $bindir)
+	AC_SUBST(domserver_etcdir,        $sysconfdir/${PACKAGE_TARNAME})
+	AC_SUBST(domserver_webappdir,     $datadir/${PACKAGE_TARNAME}/webapp)
+	AC_SUBST(domserver_sqldir,        $datadir/${PACKAGE_TARNAME}/sql)
+	AC_SUBST(domserver_libdir,        $libdir/${PACKAGE_TARNAME})
+	AC_SUBST(domserver_libvendordir,  $libdir/${PACKAGE_TARNAME}/vendor)
+	AC_SUBST(domserver_logdir,        $localstatedir/log/${PACKAGE_TARNAME})
+	AC_SUBST(domserver_rundir,        $localstatedir/run/${PACKAGE_TARNAME})
+	AC_SUBST(domserver_tmpdir,        /tmp)
+	AC_SUBST(domserver_exampleprobdir,$datadir/${PACKAGE_TARNAME}/example_problems)
 
-	AC_SUBST(judgehost_root,        '')
-	AC_SUBST(judgehost_bindir,      $bindir)
-	AC_SUBST(judgehost_etcdir,      $sysconfdir/${PACKAGE_TARNAME})
-	AC_SUBST(judgehost_libdir,      $libdir/${PACKAGE_TARNAME})
-	AC_SUBST(judgehost_libjudgedir, $libdir/${PACKAGE_TARNAME}/judge)
-	AC_SUBST(judgehost_logdir,      $localstatedir/log/${PACKAGE_TARNAME})
-	AC_SUBST(judgehost_rundir,      $localstatedir/run/${PACKAGE_TARNAME})
-	AC_SUBST(judgehost_tmpdir,      /tmp)
-	AC_SUBST(judgehost_judgedir,    $localstatedir/lib/${PACKAGE_TARNAME}/judgings)
-	AC_SUBST(judgehost_chrootdir,   /chroot/${PACKAGE_TARNAME})
-	AC_SUBST(judgehost_cgroupdir,   /sys/fs/cgroup)
+	AC_SUBST(judgehost_root,          '')
+	AC_SUBST(judgehost_bindir,        $bindir)
+	AC_SUBST(judgehost_etcdir,        $sysconfdir/${PACKAGE_TARNAME})
+	AC_SUBST(judgehost_libdir,        $libdir/${PACKAGE_TARNAME})
+	AC_SUBST(judgehost_libjudgedir,   $libdir/${PACKAGE_TARNAME}/judge)
+	AC_SUBST(judgehost_logdir,        $localstatedir/log/${PACKAGE_TARNAME})
+	AC_SUBST(judgehost_rundir,        $localstatedir/run/${PACKAGE_TARNAME})
+	AC_SUBST(judgehost_tmpdir,        /tmp)
+	AC_SUBST(judgehost_judgedir,      $localstatedir/lib/${PACKAGE_TARNAME}/judgings)
+	AC_SUBST(judgehost_chrootdir,     /chroot/${PACKAGE_TARNAME})
+	AC_SUBST(judgehost_cgroupdir,     /sys/fs/cgroup)
 
-	AC_SUBST(domjudge_docdir,       $docdir)
+	AC_SUBST(domjudge_docdir,         $docdir)
 fi
 
 # }}}
@@ -221,6 +222,7 @@ AC_ARG_WITH([systemdsystemunitdir],
      [AS_HELP_STRING([--with-systemdsystemunitdir=DIR], [Directory for systemd service files])],,
      [with_systemdsystemunitdir=auto])
 AS_IF([test "x$with_systemdsystemunitdir" = "xyes" -o "x$with_systemdsystemunitdir" = "xauto"], [
+     AS_IF([test "x$PKG_CONFIG" = "x"],AC_MSG_ERROR([systemd support requested but no pkg-config available to query systemd package]))
      def_systemdsystemunitdir=$($PKG_CONFIG --variable=systemdsystemunitdir systemd)
 
      AS_IF([test "x$def_systemdsystemunitdir" = "x"],
@@ -241,11 +243,11 @@ AX_WITH_COMMENT(8,[       ])
 
 if test "x$with_baseurl" != x; then
 	AC_SUBST(BASEURL,$with_baseurl)
-	AC_MSG_RESULT($BASEURL)
 else
 	AC_SUBST(BASEURL,'https://example.com/domjudge/')
 	AC_SUBST(BASEURL_UNCONFIGURED,1)
 fi
+AC_MSG_RESULT($BASEURL)
 
 # Checks for programs.
 AC_PROG_CXX

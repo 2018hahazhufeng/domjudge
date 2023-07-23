@@ -120,6 +120,7 @@ class MiscController extends BaseController
             $data['clarificationRequests'] = $clarificationRequests;
             $data['categories']            = $this->config->get('clar_categories');
             $data['allowDownload']         = (bool)$this->config->get('allow_team_submission_download');
+            $data['showTooLateResult']     = $this->config->get('show_too_late_result');
         }
 
         if ($request->isXmlHttpRequest()) {
@@ -164,7 +165,7 @@ class MiscController extends BaseController
             /** @var UploadedFile $file */
             $file             = $data['code'];
             $realfile         = $file->getRealPath();
-            $originalfilename = $file->getClientOriginalName() ?? '';
+            $originalfilename = $file->getClientOriginalName();
 
             $langid   = $data['langid'];
             $username = $this->getUser()->getUserIdentifier();
